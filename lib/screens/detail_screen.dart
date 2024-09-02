@@ -32,7 +32,7 @@ class _DetailScreenState extends State<DetailScreen> {
     prefs = await SharedPreferences.getInstance();
     final likedToons = prefs.getStringList('likedToons');
     if (likedToons != null) {
-      if (likedToons.contains(widget.id) == true) {
+      if (likedToons.contains(widget.id)) {
         isLiked = true;
         setState(() {});
       }
@@ -58,6 +58,9 @@ class _DetailScreenState extends State<DetailScreen> {
         likedToons.add(widget.id);
       }
       await prefs.setStringList('likedToons', likedToons);
+      setState(() {
+        isLiked = !isLiked;
+      });
     }
   }
 
@@ -81,7 +84,7 @@ class _DetailScreenState extends State<DetailScreen> {
           centerTitle: true,
           actions: [
             IconButton(
-              onPressed: () {},
+              onPressed: onHeartTap,
               icon: Icon(
                 isLiked ? Icons.favorite : Icons.favorite_outline,
               ),
